@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-contenido',
@@ -11,7 +13,7 @@ export class ContenidoComponent  implements OnInit {
   // Define las tarjetas de acuerdo al tipo de usuario
   cards: any[] = [];
 
-  constructor() {
+  constructor(private navCtrl: NavController) {
     // Dependiendo del tipo de usuario, agrega las tarjetas correspondientes
     if (this.userType === 'user') {
       this.cards.push({
@@ -41,9 +43,16 @@ export class ContenidoComponent  implements OnInit {
     }
   }
 
-  handleCardClick(card: any) {
-    // Lógica cuando se hace clic en una tarjeta, puedes usar el objeto card para obtener detalles adicionales
-    console.log('Card clicked:', card);
+  handleCardClick() {
+    this.navCtrl.navigateForward('/reserva')
+  }
+  irCheckInPage(event: Event){
+    event.stopPropagation();
+    this.navCtrl.navigateForward('/check-in')
+  }
+  irCheckOutPage(event: Event){
+    event.stopPropagation();
+    this.navCtrl.navigateForward('/check-out')
   }
 
 

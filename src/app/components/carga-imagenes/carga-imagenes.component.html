@@ -1,0 +1,20 @@
+<div
+  ngxFileDrop
+  (drop)="onFileDropped($event)"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (dragend)="onDragEnd($event)"
+  [class.drop-zone-valid]="isDropZoneValid"
+  [class.drop-zone-invalid]="!isDropZoneValid"
+>
+  <ng-container *ngIf="imageFiles.length === 0; else uploadedImages">
+    <p>Arrastra y suelta imágenes aquí o haz clic para seleccionar imágenes.</p>
+  </ng-container>
+  <ng-template #uploadedImages>
+    <div *ngFor="let file of imageFiles">
+      <img [src]="getFilePreview(file)" alt="Imagen">
+    </div>
+    <ion-button color="danger" (click)="clearImages()">Eliminar imágenes</ion-button>
+  </ng-template>
+</div>
+<input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;">

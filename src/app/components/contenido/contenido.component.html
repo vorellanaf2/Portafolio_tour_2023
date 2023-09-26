@@ -1,4 +1,4 @@
-<ion-card *ngFor="let card of cards" (click)="handleCardClick(card)">
+<ion-card *ngFor="let card of cards" (click)="handleCardClick()">
   <img [src]="card.imageUrl" [alt]="card.imageAlt" />
   <ion-card-header>
     <ion-card-title>{{ card.title }}</ion-card-title>
@@ -9,8 +9,8 @@
     {{ card.content }}
   </ion-card-content>
     <!-- Lógica condicional para mostrar el botón solo a empleados y administradores -->
-    <ion-button fill="clear" *ngIf="userType === 'empleado' || userType === 'admin'">Check in</ion-button>
-    <ion-button fill="clear" *ngIf="userType === 'empleado' || userType === 'admin'">Check out</ion-button>
+    <ion-button fill="clear" *ngIf="userType === 'empleado' || userType === 'admin'" (click)="irCheckInPage($event)">Check in</ion-button>
+    <ion-button fill="clear" *ngIf="userType === 'empleado' || userType === 'admin'" (click)="irCheckOutPage($event)">Check out</ion-button>
 </ion-card>
 
 

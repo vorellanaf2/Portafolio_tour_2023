@@ -1,0 +1,216 @@
+<ion-content>
+  <ion-segment [(ngModel)]="selectedSegment">
+    <ion-segment-button value="departamento">
+      Departamento
+    </ion-segment-button>
+    <ion-segment-button value="producto">
+      Producto
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Contenido del segmento seleccionado -->
+  <div [ngSwitch]="selectedSegment">
+    <!-- Segmento "Departamento" -->
+    <ng-container *ngSwitchCase="'departamento'">
+      <!-- Contenido del formulario de departamento -->
+      <!-- ... Tu formulario para agregar departamentos aquí ... -->
+      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+        <ion-list>
+          <!-- Nombre -->
+          <ion-item>
+            <ion-label position="floating">Nombre Descriptivo</ion-label>
+            <ion-input formControlName="nombre" type="text" required></ion-input>
+          </ion-item>
+          <!-- Dirección -->
+          <ion-item>
+            <ion-label position="floating">Dirección</ion-label>
+            <ion-input formControlName="direccion" type="text" required></ion-input>
+          </ion-item>
+          <!-- Comuna -->
+          <ion-item>
+            <ion-label position="floating">Comuna</ion-label>
+            <ion-input formControlName="comuna" type="text" required></ion-input>
+          </ion-item>
+          <!-- Región -->
+          <ion-item>
+            <ion-label position="floating">Región</ion-label>
+            <ion-input formControlName="region" type="text" required></ion-input>
+          </ion-item>
+          <!-- Monto -->
+          <ion-item>
+            <ion-label position="floating">Monto</ion-label>
+            <ion-input formControlName="monto" type="number" required></ion-input>
+          </ion-item>
+          <!-- Tipo de Propiedad -->
+          <ion-item>
+              <ion-select label="Tipo de Propiedad" formControlName="tipoPropiedad">
+                <ion-select-option value="casa">Casa</ion-select-option>
+                <ion-select-option value="departamento">Departamento</ion-select-option>
+                <ion-select-option value="terreno">Terreno</ion-select-option>
+              </ion-select>
+          </ion-item>
+          <!-- Cantidad de Habitaciones -->
+          <ion-item>
+            <ion-select label="Cantidad de Habitaciones" formControlName="habitaciones">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+              <ion-select-option value="6">6</ion-select-option>
+              <ion-select-option value="7">7</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <!-- Cantidad de Baños -->
+          <ion-item>
+            <ion-select label="Cantidad de Baños" formControlName="banos">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <!-- Características -->
+          <ion-item>
+            <ion-label>Características: </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox formControlName="wifi" slot="start"><ion-label>Wi fi</ion-label></ion-checkbox>
+            <ion-checkbox formControlName="patio"slot="start"><ion-label>Patio</ion-label></ion-checkbox>
+            <ion-checkbox formControlName="terraza"slot="start"><ion-label>Terraza</ion-label></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox formControlName="agua"slot="start"><ion-label>Agua</ion-label></ion-checkbox>
+            <ion-checkbox formControlName="electricidad"slot="start"><ion-label>Luz</ion-label></ion-checkbox> 
+          </ion-item>
+          <ion-item>
+            <app-carga-imagenes></app-carga-imagenes>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Descripción</ion-label>
+            <ion-input formControlName="descripcion" type="text" required></ion-input>
+          </ion-item>
+        </ion-list>
+      </form>
+    </ng-container>
+
+    <!-- Segmento "Producto" -->
+    <ng-container *ngSwitchCase="'producto'">
+      <!-- Contenido del formulario de producto -->
+      <!-- ... Tu formulario para agregar productos aquí ... -->
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <ion-list>
+          <!-- Cantidad de Habitaciones -->
+          <ion-item>
+            <ion-select label="Cuchillos" formControlName="utensilio_cuchillo">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+              <ion-select-option value="6">6</ion-select-option>
+              <ion-select-option value="7">7</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <!-- Cantidad de Baños -->
+          <ion-item>
+            <ion-select label="Cucharas" formControlName="utensilio_cucharas">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+              <ion-select-option value="6">6</ion-select-option>
+              <ion-select-option value="7">7</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <!-- Características -->
+          <ion-item>
+            <ion-select label="Tenedor" formControlName="utensilio_tenedor">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+              <ion-select-option value="6">6</ion-select-option>
+              <ion-select-option value="7">7</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Vasos" formControlName="vasos">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+              <ion-select-option value="6">6</ion-select-option>
+              <ion-select-option value="7">7</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Tazas" formControlName="tazas">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+              <ion-select-option value="6">6</ion-select-option>
+              <ion-select-option value="7">7</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Platos" formControlName="platos">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+              <ion-select-option value="6">6</ion-select-option>
+              <ion-select-option value="7">7</ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+          <ion-item>
+            <ion-select label="Camas" formControlName="camas">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-checkbox formControlName="refrigerador" slot="start"><ion-label>Refrigerador</ion-label></ion-checkbox>
+            <ion-checkbox formControlName="microondas" slot="start"><ion-label>Microondas</ion-label></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox formControlName="television" slot="start"><ion-label>Television</ion-label></ion-checkbox>
+            <ion-checkbox formControlName="sillon" slot="start"><ion-label>Sillon</ion-label></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox formControlName="ollas" slot="start"><ion-label>Ollas</ion-label></ion-checkbox>
+            <ion-checkbox formControlName="comedor" slot="start"><ion-label>Mesa + Sillas</ion-label></ion-checkbox>
+          </ion-item>
+
+
+        </ion-list>
+      </form>
+    </ng-container>
+  </div>
+
+  <!-- Botón de guardar -->
+  <ion-button expand="full" (click)="guardar()" [disabled]="!formulariosCompletos()">
+    Guardar
+  </ion-button>
+</ion-content>
+
+
+
+
+
+<ion-content>
+
+</ion-content>
