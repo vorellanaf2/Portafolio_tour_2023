@@ -12,7 +12,11 @@ import { TabsPage } from './tabs.page';
     IonicModule,
     CommonModule,
     FormsModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
+    
+  ],
+  exports:[
+    
   ],
   declarations: [TabsPage]
 })

@@ -21,7 +21,25 @@ const routes: Routes = [
       },
       {
         path: 'tab4',
-        loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
+        children: [
+          {
+            path: '',
+            redirectTo: 'iniciar-sesion',
+            pathMatch: 'full'
+          },
+          {
+            path: 'iniciar-sesion',
+            loadChildren: () => import('../tab4/iniciar-sesion/iniciar-sesion.module').then(m => m.IniciarSesionPageModule)
+          },
+          {
+            path: 'perfil',
+            loadChildren: () => import('../tab4/iniciar-sesion/perfil/perfil.module').then(m => m.PerfilPageModule)
+          },
+          {
+            path: 'recuperar',
+            loadChildren: () => import('../pages/recuperar/recuperar.module').then(m => m.RecuperarPageModule)
+          } 
+        ]
       },
       {
         path: '',
@@ -36,6 +54,7 @@ const routes: Routes = [
     pathMatch: 'full'
   }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

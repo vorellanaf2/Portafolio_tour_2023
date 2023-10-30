@@ -1,11 +1,9 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Agregar Departamento
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
- <app-transporte ></app-transporte>
+<app-header title="Agregar"></app-header>
+<ion-content style="position: relative;">
+    <ion-fab  vertical="bottom" horizontal="end" slot="fixed" style="z-index: 999;">
+        <ion-fab-button (click)="addUpdateProduct()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>
+

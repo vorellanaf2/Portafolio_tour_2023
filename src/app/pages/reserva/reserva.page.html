@@ -7,6 +7,58 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
-
+<ion-content>
+  
+  <ion-card *ngIf="propiedadData"  >
+    <ion-button (click)="onClick()" expand="full"  shape="round">
+      Reservar
+    </ion-button>
+    <ion-card-header>
+      Descripción
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item><ion-label>Nombre:  </ion-label>{{propiedadData.nombre}}</ion-item>
+      <ion-item><ion-label>Monto:  </ion-label>{{propiedadData.monto}}</ion-item>
+      <ion-item><ion-label>Dirección:  </ion-label>{{propiedadData.direccion}}</ion-item>
+      <ion-item><ion-label>Comuna:  </ion-label>{{propiedadData.comuna}}</ion-item>
+      <ion-item><ion-label>Habitaciones:  </ion-label>{{propiedadData.habitaciones}}</ion-item>
+      <ion-item><ion-label>Baños:  </ion-label>{{propiedadData.banos}}</ion-item>      
+    </ion-card-content>
+    <ion-card-header>
+      Descripción de Propietario:
+      <ion-item>
+        <ion-text>{{propiedadData.descripcion}}</ion-text>
+      </ion-item>
+    </ion-card-header>
+    <ion-card-header>
+      Detalles de la Propiedad
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item><ion-label>Agua  </ion-label>{{propiedadData.agua ? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Electricidad  </ion-label>{{propiedadData.electricidad ? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Patio  </ion-label>{{propiedadData.patio ? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Terraza  </ion-label>{{propiedadData.terraza ? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Wifi  </ion-label>{{propiedadData.wifi ? 'Si': 'No'}}</ion-item>
+    </ion-card-content>
+    <ion-card-header>
+      Detalles de Productos
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-item><ion-label>Comedor  </ion-label>{{ productoData.comedor ? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Microondas  </ion-label>{{ productoData.microondas? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Television  </ion-label>{{ productoData.television? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Refrigerador  </ion-label>{{ productoData.refrigerador? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Sillon  </ion-label>{{ productoData.sillon? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Ollas  </ion-label>{{ productoData.ollas? 'Si': 'No'}}</ion-item>
+      <ion-item><ion-label>Camas  </ion-label>{{ productoData.camas}}</ion-item>
+      <ion-item><ion-label>Tazas  </ion-label>{{ productoData.tazas}}</ion-item>
+      <ion-item><ion-label>Cucharas  </ion-label>{{ productoData.utensilio_cucharas}}</ion-item>
+      <ion-item><ion-label>Cuchillo  </ion-label>{{ productoData.utensilio_cuchillo}}</ion-item>
+      <ion-item><ion-label>Tenedor  </ion-label>{{ productoData.utensilio_tenedor}}</ion-item>
+      <ion-item><ion-label>Vasos  </ion-label>{{ productoData.vasos}}</ion-item>
+      <ion-item><ion-label>Platos  </ion-label>{{ productoData.platos}}</ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+

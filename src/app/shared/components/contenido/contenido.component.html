@@ -1,0 +1,18 @@
+<ion-card *ngFor="let card of cards" (click)="handleCardClick(card.direccion)" class="ion-card">
+  <img [src]="card.imagen" [alt]="card.imagen" />
+  <ion-card-header>
+    <ion-card-title>{{ card.title }}</ion-card-title>
+    <ion-card-subtitle>{{ card.subtitle }}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>{{ card.content }}</ion-card-content>
+  <ion-card-content>Monto de Arriendo {{ card.monto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }) }} </ion-card-content>
+  <ion-button fill="clear" *ngIf="userType === 'empleado' || userType === 'admin'"
+    (click)="irCheckInPage($event,card.direccion)">
+    Check in
+  </ion-button>
+  <ion-button fill="clear" *ngIf="userType === 'empleado' || userType === 'admin'"
+    (click)="irCheckOutPage($event,card.direccion)">
+    Check out
+  </ion-button>
+</ion-card>

@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CheckInPageRoutingModule } from './check-in-routing.module';
 
 import { CheckInPage } from './check-in.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CheckInPageRoutingModule
+    CheckInPageRoutingModule,
+    SharedModule
   ],
   declarations: [CheckInPage]
 })

@@ -1,0 +1,77 @@
+
+<app-header title="Iniciar Sesión"></app-header>
+<app-logo></app-logo>
+
+  <ion-content>
+    <ion-segment [(ngModel)]="segmentModel" (ionChange)="segmentChanged()">
+      <ion-segment-button value="register">
+        <strong>Registro</strong>
+      </ion-segment-button>
+      <ion-segment-button value="login">
+        <strong>Inicio de Sesión</strong>
+      </ion-segment-button>
+    </ion-segment>
+  
+    <!-- Formulario de Registro -->
+  
+    <ion-card *ngIf="segmentModel === 'register'">
+      <ion-card-content class="color-fondo">
+        <form [formGroup]="registerForm" (ngSubmit)="register2()">
+          <div class="ion-text-center"><strong>REGISTRARSE</strong></div>
+          <ion-item>
+            <ion-label position="floating">Nombre de usuario</ion-label>
+            <ion-input formControlName="username" type="text" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Correo</ion-label>
+            <ion-input formControlName="email" type="email" required></ion-input>
+          </ion-item>          
+          <div *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched" class="error-message">
+            El correo electrónico es obligatorio.
+          </div>
+          <div *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched" class="error-message">
+            Ingresa una dirección de correo electrónico válida.
+          </div>
+          <ion-item>
+            <ion-label position="floating">Dirección</ion-label>
+            <ion-input formControlName="direccion" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input formControlName="telefono" type="text" inputmode="numeric" (ionChange)="checkTelefonoValue()" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input formControlName="password" type="password" required></ion-input>
+          </ion-item>
+          <div *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched" class="error-message">
+            La contraseña es obligatoria.
+          </div>
+          <ion-button expand="full" type="submit">Registrarse</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  
+    <!-- Formulario de Inicio de Sesión -->
+    <ion-card *ngIf="segmentModel === 'login'">
+      <ion-card-content class="color-fondo">
+        <form [formGroup]="loginForm" (ngSubmit)="login2()">
+          <div class="ion-text-center"><strong>INICIAR SESIÓN</strong></div>
+          <ion-item>
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input formControlName="email" type="text" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input formControlName="password" type="password" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-button (click)="recuperarContra()" slot="end" fill="clear">¿Olvidaste la contraseña?</ion-button>
+          </ion-item>
+          <ion-button expand="full" (click)="login2()">Iniciar Sesión</ion-button>
+          
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+

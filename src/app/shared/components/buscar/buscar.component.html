@@ -1,0 +1,40 @@
+<ion-item>
+    <ion-label><ion-searchbar placeholder="Buscar Ubicación"></ion-searchbar></ion-label>
+  </ion-item>
+  <ion-accordion-group>
+    <ion-item>
+      <ion-accordion value="primero">
+        <ion-item slot="header" color="light">
+          <ion-label>Fecha de inicio: {{startDate | date: 'dd/MM/yyyy'}}</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">  <ion-datetime presentation="date"
+          display-format="DD/MM/YYYY"
+          [(ngModel)]="startDate"
+          [min]="minDate"
+          [max]="maxDate"
+        ></ion-datetime></div>
+      </ion-accordion>
+    </ion-item>
+
+    <ion-item>
+      <ion-accordion value="segundo">
+        <ion-item slot="header" color="light">
+          <ion-label>Fecha de termino: {{endDate | date: 'dd/MM/yyyy'}}</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">  
+          <ion-datetime locale="es-ES" presentation="date"
+          display-format="DD/MM/YYYY"
+          [(ngModel)]="endDate"
+          [min]="minDate"
+          [max]="maxDate"
+        ></ion-datetime></div>
+      </ion-accordion>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><div *ngIf="startDate && endDate">
+        <p *ngIf="calculateSelectedDays()>-1">Días seleccionados: {{ calculateSelectedDays() }}</p>
+      </div></ion-label>
+    </ion-item>
+    <ion-button class="expand-button">Buscar</ion-button>
+  </ion-accordion-group>

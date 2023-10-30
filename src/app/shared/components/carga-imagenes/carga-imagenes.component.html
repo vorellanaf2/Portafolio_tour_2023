@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Subir Imágenes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="uploadImage()">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    <ion-button type="submit" expand="full">Subir Imagen</ion-button>
+  </form>
+
+  <ion-progress-bar [value]="uploadProgress"></ion-progress-bar>
+</ion-content>

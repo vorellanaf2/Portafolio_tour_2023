@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Recuperar</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="loginForm" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit()">
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input type="email" placeholder="Ingresa Correo Electrónico" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-button class="submit" type="submit" expand="block" fill="clear" shape="round">
+      Recuperar contreña
+    </ion-button>
+  </form>
+
+  
+
+</ion-content>

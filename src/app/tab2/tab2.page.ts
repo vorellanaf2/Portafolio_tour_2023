@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
+import { UtilsService } from '../services/utils.service';
+import { FirebaseService } from '../services/firebase.service';
+import { TransporteComponent } from '../shared/components/agregar/transporte.component';
 
 @Component({
   selector: 'app-tab2',
@@ -6,7 +9,16 @@ import { Component } from '@angular/core';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+  utilsSvc = inject(UtilsService);
+  firebaseSvc = inject(FirebaseService);
 
   constructor() {}
 
+
+  addUpdateProduct(){
+    this.utilsSvc.presentModal({
+      component: TransporteComponent,
+      cssClass: 'app-update-modal'
+    })
+  }  
 }
