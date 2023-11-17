@@ -1,0 +1,26 @@
+.d-flex-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.person-icon {
+    font-size: 45px;
+    margin-top: 5px; 
+}
+.texto-posision {
+    text-align: center;
+    margin-top: 0; 
+}
+.color-fondo1 {
+    color: rgb(2, 2, 2); /* Cambia el color del texto para que sea legible en el fondo oscuro */
+    border: 2px solid black; /* Añade un borde negro a las tarjetas para que se destaquen mejor en el fondo oscuro */
+}
+.bordes-item {
+    border: 1px solid #000; /* 1px de ancho y color negro */
+    border-radius: 5px; /* Bordes redondeados (opcional) */
+    margin-bottom: 10px; /* Espacio entre elementos (opcional) */
+    /* Otros estilos CSS según tus necesidades */
+  }
+  

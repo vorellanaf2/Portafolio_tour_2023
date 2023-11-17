@@ -22,7 +22,8 @@ export class UtilsService {
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos,
       promptLabelHeader,
-      promptLabelPhoto: 'Seleccion una imagen'
+      promptLabelPhoto: 'Seleccion una imagen',
+      promptLabelPicture: 'Tome una foto'
     });
   }
 
@@ -36,6 +37,10 @@ export class UtilsService {
 
   saveInlocalStorage(key: string, value: any) {
     return localStorage.setItem(key, JSON.stringify(value));
+  }
+  getUserFromLocalStorage(){
+    const userData = localStorage.getItem('Usuarios');
+    return userData ? JSON.parse(userData) : null;
   }
 
   getFromLocalStorage(key: string) {

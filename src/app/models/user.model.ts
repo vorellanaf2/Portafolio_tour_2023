@@ -1,8 +1,9 @@
 export interface User{
+    uid:string,
     email: string,
     password: string,
     telefono: number,
     tipoUsuario: 'User' | 'Admin' | 'Empleado',
-    username: string,
+    name: string,
     direccion: string
 }

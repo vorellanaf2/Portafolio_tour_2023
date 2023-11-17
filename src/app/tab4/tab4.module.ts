@@ -16,7 +16,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     IonicModule,
     Tab4PageRoutingModule,
-    SharedModule
+    SharedModule,
+    
 
   ],
   declarations: [Tab4Page]

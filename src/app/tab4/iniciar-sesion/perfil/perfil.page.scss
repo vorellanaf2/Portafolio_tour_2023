@@ -1,0 +1,23 @@
+ion-row.center-content {
+    align-items: center !important;
+}
+
+.profile-icon {
+    font-size: 10em;
+}
+
+.name-label, .tipo-usuario-label {
+    font-weight: bold;
+    display: block; 
+    text-align: center;
+}
+
+
+.action-button {
+    font-size: 0.8em;
+    padding: 5px 10px;
+}
+
+ion-label.label {
+    font-weight: bold;
+}

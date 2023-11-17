@@ -1,18 +1,70 @@
-<ion-card *ngFor="let card of cards" (click)="handleCardClick(card.direccion)" class="ion-card">
-  <img [src]="card.imagen" [alt]="card.imagen" />
+<ion-card class="color-fondo">
+  <ion-item>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterItems()"></ion-searchbar>
+  </ion-item>
+  
+<!-- card-list.component.html -->
+
+<ion-accordion-group>
+  <ion-item>
+    <ion-accordion value="primero">
+      <ion-item slot="header" color="light">
+        <ion-label>Fecha de inicio: {{startDate | date: 'dd/MM/yyyy'}}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content"> <ion-datetime presentation="date" display-format="DD/MM/YYYY"
+          [(ngModel)]="startDate" [min]="minDate" [max]="maxDate"></ion-datetime></div>
+    </ion-accordion>
+  </ion-item>
+  <ion-item>
+    <ion-accordion value="segundo">
+      <ion-item slot="header" color="light">
+        <ion-label>Fecha de termino: {{endDate | date: 'dd/MM/yyyy'}}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-datetime locale="es-ES" presentation="date" display-format="DD/MM/YYYY" [(ngModel)]="endDate"
+          [min]="minDate" [max]="maxDate"></ion-datetime>
+      </div>
+    </ion-accordion>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <div *ngIf="startDate && endDate">
+        <p *ngIf="calculateSelectedDays(startDate, endDate) > -1">Días seleccionados: {{ calculateSelectedDays(startDate, endDate) }}</p>
+      </div>
+    </ion-label>
+  </ion-item>
+</ion-accordion-group>
+
+</ion-card>
+
+<ion-card *ngFor="let card of filteredItems" (click)="handleCardClick(card.direccion)" class="ion-card">
+  <img [src]="card.imageAlt" />
   <ion-card-header>
     <ion-card-title>{{ card.title }}</ion-card-title>
     <ion-card-subtitle>{{ card.subtitle }}</ion-card-subtitle>
   </ion-card-header>
-
   <ion-card-content>{{ card.content }}</ion-card-content>
-  <ion-card-content>Monto de Arriendo {{ card.monto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }) }} </ion-card-content>
-  <ion-button fill="clear" *ngIf="userType === 'empleado' || userType === 'admin'"
-    (click)="irCheckInPage($event,card.direccion)">
+  <ion-card-content>{{ card.comuna }}</ion-card-content>
+  <ion-card-content>Monto de Arriendo {{ card.monto ? card.monto.toLocaleString('es-CO', { style: 'currency', currency:
+    'COP', minimumFractionDigits: 0 }) : 'No disponible' }} </ion-card-content>
+  <ion-button fill="clear" *ngIf="showAdminActions" (click)="irCheckInPage($event, card.direccion)">
     Check in
   </ion-button>
-  <ion-button fill="clear" *ngIf="userType === 'empleado' || userType === 'admin'"
-    (click)="irCheckOutPage($event,card.direccion)">
+  <ion-button fill="clear" *ngIf="showAdminActions" (click)="irCheckOutPage($event, card.direccion)">
     Check out
+  </ion-button>
+</ion-card>
+<ion-card (click)="onClick()" color="warning" class="custom-card" *ngIf="showLoginActions">
+  <ion-icon name="warning-outline" class="large-icon"></ion-icon>
+  <ion-card-header>
+    <ion-card-title>
+      <h1> Debes iniciar sesión para continuar</h1>
+    </ion-card-title>
+    <ion-card-subtitle>
+      <h2> Regístrate o Inicia sesión</h2>
+    </ion-card-subtitle>
+  </ion-card-header>
+  <ion-button (click)="onClick()" class="centered-button">
+    Ir a cuenta
   </ion-button>
 </ion-card>

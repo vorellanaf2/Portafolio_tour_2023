@@ -10,15 +10,14 @@
     <!-- Segmento "Departamento" -->
     <ion-card *ngIf="selectedSegment === 'departamento'">
       <ion-card-content class="color-fondo">
-        <!-- Contenido del formulario de departamento -->
-        <!-- ... Tu formulario para agregar departamentos aquí ... -->
         <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
           <ion-list>
             <ion-avatar *ngIf="propertyForm.value.image">
               <img [src]="propertyForm.value.image" />
             </ion-avatar>
+            <br>
             <ion-item>
-              <ion-button (click)="takeImage()">
+              <ion-button class="ion-text-center" mode="ios" size="small" shape="round" (click)="takeImage()">
                 Guardar imagen
               </ion-button>
             </ion-item>            

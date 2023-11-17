@@ -22,6 +22,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/reserva/reserva.module').then( m => m.ReservaPageModule)
   },  
   {
+    path: 'pago/:direccion',
+    loadChildren: () => import('./pages/reserva/pago/pago.module').then( m => m.PagoPageModule)
+  }, 
+  {
     path: 'iniciar-sesion',
     loadChildren: () => import('./tab4/iniciar-sesion/iniciar-sesion.module').then( m => m.IniciarSesionPageModule),canActivate:[NoAuthGuard]
   },
@@ -32,8 +36,7 @@ const routes: Routes = [
   {
     path: 'recuperar',
     loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
-  },
-  
+  }
 ];
 @NgModule({
   imports: [

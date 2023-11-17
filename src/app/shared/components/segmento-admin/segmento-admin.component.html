@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged()">
+      <ion-segment-button value="formulario">
+        Registro de personal
+      </ion-segment-button>
+      <ion-segment-button value="deslizante"> Propiedades </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-list *ngIf="segment === 'formulario'">
+      <app-logo></app-logo>
+      <ion-card-content class="color-fondo">
+        <form [formGroup]="registerForm" (ngSubmit)="register2()">
+          <div class="ion-text-center"><strong>REGISTRAR EMPLEADO</strong></div>
+          <ion-item>
+            <ion-label position="floating">Nombre de usuario</ion-label>
+            <ion-input formControlName="name" type="text" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Correo</ion-label>
+            <ion-input
+              formControlName="email"
+              type="email"
+              required
+            ></ion-input>
+          </ion-item>
+          <div
+            *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched
+            "class="error-message">El correo electrónico es obligatorio.
+          </div>
+          <ion-item>
+            <ion-label position="floating">Dirección</ion-label>
+            <ion-input
+              formControlName="direccion"
+              type="text"
+              required
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input
+              formControlName="telefono"
+              type="text"
+              inputmode="numeric"
+              required
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input
+              formControlName="password"
+              type="password"
+              required
+            ></ion-input>
+          </ion-item>
+          <div *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched"class="error-message">La contraseña es obligatoria.</div>
+          <ion-button expand="full" (click)="register2()">Registrarse</ion-button>
+        </form>
+      </ion-card-content>
+      <ion-card-content class="color-fondo1">
+        <Strong><h1><ion-label>Listado de Empleados</ion-label></h1></Strong>
+      <ion-item-sliding class="bordes-item" *ngFor="let item_empleado of empleado">
+        <ion-item>
+            <ion-card-content>
+              <ion-card-title>{{ item_empleado.title }}</ion-card-title>
+              <ion-card-subtitle>{{ item_empleado.subtitle }}</ion-card-subtitle>
+              <p>{{ item_empleado.content }}</p>
+            </ion-card-content>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="eliminarEmpleado(item_empleado.uid)"><ion-icon name="warning-outline"></ion-icon>Eliminar</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-card-content>
+    <ion-footer>
+      <ion-toolbar>
+        
+      </ion-toolbar>
+    </ion-footer>
+    </ion-list>
+
+
+    
+  </ion-card>
+
+  <ion-list *ngIf="segment === 'deslizante'">
+    <div class="d-flex-center">
+      <ion-icon class="person-icon" color="primary" name="business-outline"></ion-icon>
+      <ion-text class="texto-posision" color="primary"><h3><strong>Mis Propiedades</strong></h3></ion-text>
+    </div>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterItems()"></ion-searchbar>
+    <ion-card-content class="color-fondo1">
+      <Strong><h1><ion-label>Listado de Propiedades</ion-label></h1></Strong>
+    <ion-item-sliding class="bordes-item" *ngFor="let item_content of filteredItems">
+      <ion-item>
+          <ion-card-content>
+            <ion-card-title>{{ item_content.title }}</ion-card-title>
+            <ion-card-subtitle>{{ item_content.direccion }}</ion-card-subtitle>
+            <p>{{ item_content.content }}</p>
+            Monto de Arriendo
+            {{ item_content.monto
+              ? item_content.monto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 })
+              : 'No disponible' }}
+          </ion-card-content>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="eliminarItem(item_content.uid)"><ion-icon name="warning-outline"></ion-icon>Eliminar</ion-item-option>
+        <ion-item-option color="secondary" (click)="addUpdateProduct()"><ion-icon name="document-text-outline"></ion-icon>Editar</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-card-content>
+  <ion-footer>
+    <ion-toolbar>
+      
+    </ion-toolbar>
+  </ion-footer>
+  
+  </ion-list>
+
+  
+</ion-content>

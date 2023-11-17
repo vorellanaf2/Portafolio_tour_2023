@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { NavController } from '@ionic/angular';
+import { DataSharingService } from 'src/app/services/data-sharing.service';
 
 @Component({
   selector: 'app-reserva',
@@ -12,11 +14,14 @@ export class ReservaPage implements OnInit {
   direccion: string;
   propiedadData: any;
   productoData: any;
+  cards: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private firestore: AngularFirestore,
-    private datosCompartidos: FirebaseService
+    private datosCompartidos: FirebaseService,
+    private navCtrl: NavController,
+    private dataSharingService: DataSharingService,
   ) {
     this.direccion = '';
     this.propiedadData = null;
@@ -64,7 +69,7 @@ export class ReservaPage implements OnInit {
         }
       });
   }
-  onClick(){
-
+  onClick(direccion: string) {
+    this.navCtrl.navigateForward(['/pago',direccion]);
   }
 }

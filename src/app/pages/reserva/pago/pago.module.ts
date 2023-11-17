@@ -4,20 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ReservaPageRoutingModule } from './reserva-routing.module';
-
-import { ReservaPage } from './reserva.page';
+import { PagoPageRoutingModule } from './pago-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { PagoPage } from './pago.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ReservaPageRoutingModule,
+    PagoPageRoutingModule,
     SharedModule,
   ],
-  declarations: [ReservaPage]
+  declarations: [PagoPage]
 })
-export class ReservaPageModule {}
+export class PagoPageModule {}

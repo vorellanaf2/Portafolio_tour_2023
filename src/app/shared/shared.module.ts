@@ -11,6 +11,7 @@ import { TransporteComponent } from './components/agregar/transporte.component';
 import { CargaImagenesComponent } from '../shared/components/carga-imagenes/carga-imagenes.component';
 import { ContenidoVistaComponent } from '../shared/components/contenido-vista/contenido-vista.component';
 import { DatetimeComponent } from '../shared/components/datetime/datetime.component';
+import { SegmentoAdminComponent } from './components/segmento-admin/segmento-admin.component';
 
 
 
@@ -24,7 +25,8 @@ import { DatetimeComponent } from '../shared/components/datetime/datetime.compon
     ContenidoComponent,
     TransporteComponent,
     CargaImagenesComponent,
-    ContenidoVistaComponent
+    ContenidoVistaComponent,
+    SegmentoAdminComponent
   ],
   exports:[
     HeaderComponent,
@@ -35,11 +37,12 @@ import { DatetimeComponent } from '../shared/components/datetime/datetime.compon
     ContenidoComponent,
     TransporteComponent,
     CargaImagenesComponent,
-    ContenidoVistaComponent
+    ContenidoVistaComponent,
+    SegmentoAdminComponent
   ],
   imports: [
     CommonModule,
-    IonicModule,
+    IonicModule.forRoot(),
     ReactiveFormsModule,
     FormsModule
   ]

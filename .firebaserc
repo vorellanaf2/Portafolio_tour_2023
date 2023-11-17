@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "tourismotest"
+  },
+  "targets": {
+    "tourismotest": {
+      "hosting": {
+        "app": [
+          "tourismotest"
+        ]
+      }
+    }
   }
 }

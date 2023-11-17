@@ -9,8 +9,10 @@
 
 <ion-content>
   
-  <ion-card *ngIf="propiedadData"  >
-    <ion-button (click)="onClick()" expand="full"  shape="round">
+  <ion-card *ngIf="propiedadData">
+
+      <img [src]="propiedadData.image" />
+    <ion-button (click)="onClick(propiedadData.direccion)" expand="full"  shape="round">
       Reservar
     </ion-button>
     <ion-card-header>
@@ -18,7 +20,8 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item><ion-label>Nombre:  </ion-label>{{propiedadData.nombre}}</ion-item>
-      <ion-item><ion-label>Monto:  </ion-label>{{propiedadData.monto}}</ion-item>
+      <ion-item><ion-label>Monto:  </ion-label>{{propiedadData.monto ? propiedadData.monto.toLocaleString('es-CO', { style: 'currency', currency:
+        'COP', minimumFractionDigits: 0 }) : 'No disponible' }}</ion-item>
       <ion-item><ion-label>Dirección:  </ion-label>{{propiedadData.direccion}}</ion-item>
       <ion-item><ion-label>Comuna:  </ion-label>{{propiedadData.comuna}}</ion-item>
       <ion-item><ion-label>Habitaciones:  </ion-label>{{propiedadData.habitaciones}}</ion-item>
