@@ -43,13 +43,6 @@ export class AddUpdateProductComponent implements OnInit {
       electricidad: [''],
       wifi: [''],
     });
-    if (this.empleado.length > 0) {
-      const firstEmpleado = this.empleado[0];
-      this.commonID = firstEmpleado.id; // Asigna el ID del documento
-      // Resto del código...
-    }
-    
-    
 
     this.user = this.user_new();
 
@@ -66,23 +59,47 @@ export class AddUpdateProductComponent implements OnInit {
   user_new(): User {
     return this.utilsSvc.getFromLocalStorage('Usuarios');
   }
+
   ngOnInit() {}
 
   onSubmit() {
-    // Obtén los valores del formulario
-    const formValues = this.propertyForm.value;
-      this.firestore
-        .collection(`Propiedad`)
-        .doc(this.uid)
-        .update(formValues)
-        .then(() => {
-          console.log('Elemento editado con éxito');
-        })
-        .catch((error) => {
-          console.error('Error al editado elemento: ', error);
-        }); 
+    // Verificar si el formulario es válido antes de continuar
+    if (this.propertyForm.valid) {
+      // Obtener los valores del formulario
+      const formValues = this.propertyForm.value;
+  
+      // Asegúrate de que this.commonID tenga un valor válido antes de llamar a update
+      if (this.commonID) {
+        // Actualizar el documento en la colección 'Propiedad'
+        this.firestore
+          .collection('Propiedad')
+          .doc(this.commonID)
+          .update(formValues)
+          .then(() => {
+            console.log('Elemento en Propiedad editado con éxito');
+          })
+          .catch((error) => {
+            console.error('Error al editar elemento en Propiedad: ', error);
+          });
+  
+        // Actualizar el documento en la subcolección 'Propiedad' del usuario
+        this.firestore
+          .collection(`Usuarios/${this.user.uid}/Propiedad/`)
+          .doc(this.commonID)
+          .update(formValues)
+          .then(() => {
+            console.log('Elemento en la subcolección de Propiedad del usuario editado con éxito');
+          })
+          .catch((error) => {
+            console.error('Error al editar elemento en la subcolección de Propiedad del usuario: ', error);
+          });
+      } else {
+        console.error('No se encontró un ID de documento válido');
+      }
+    } else {
+      console.error('El formulario no es válido');
+    }
   }
-
   
 
   loadEmployeeData() {
@@ -107,11 +124,15 @@ export class AddUpdateProductComponent implements OnInit {
           comuna: doc.comuna,
           imageUrl: doc.image,
           imageAlt: doc.image,
+          productoID: doc.productoID, // Agregado productoID
         }));
 
         // Después de cargar los datos, establecer los valores del formulario
         if (this.empleado.length > 0) {
-          const firstEmpleado = this.empleado[0]; 
+          const firstEmpleado = this.empleado[0];
+
+          // Asignar el valor de productoID a commonID
+          this.commonID = firstEmpleado.productoID;
 
           // Establecer valores del formulario
           this.propertyForm.setValue({
@@ -122,11 +143,11 @@ export class AddUpdateProductComponent implements OnInit {
             monto: firstEmpleado.monto,
             tipoPropiedad: firstEmpleado.tipoPropiedad,
             habitaciones: firstEmpleado.habitacion,
-            banos:'', 
+            banos: '',
             descripcion: firstEmpleado.descripcion,
             patio: firstEmpleado.patio,
             terraza: firstEmpleado.terraza,
-            agua: '', 
+            agua: '',
             electricidad: firstEmpleado.electricidad,
             wifi: firstEmpleado.wifi,
           });

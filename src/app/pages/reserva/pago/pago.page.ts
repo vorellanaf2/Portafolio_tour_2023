@@ -142,11 +142,15 @@ export class PagoPage implements OnInit {
 
   realizarPago() {
     let commonID = this.commonID;
+    let path = `Usuarios/${this.user.uid}/Reserva`
     const reservaData = {
       direccion: this.propiedadData.direccion,
       direccionUser: this.user.direccion,
       monto: this.propiedadData.monto,
       fechaInicio: this.startDate,
+      comuna: this.propiedadData.comuna,
+      region: this.propiedadData.region,
+      propiedadID: this.propiedadData.productoID,
       fechaTermino: this.endDate,
       diasArriendo: this.selectedDays,
       transporte: this.checkboxValue,
@@ -154,6 +158,9 @@ export class PagoPage implements OnInit {
       total: this.getTotal(),
   };
     this.guardarConID('Reserva', commonID, reservaData);
+    this.guardarConID(path, commonID, reservaData);
+    this.guardarConID(`Usuarios/${this.user.uid}/Propiedad/${this.propiedadData.productoID}/Reserva`, commonID, reservaData);
+    this.navCtrl.navigateBack('');
 
   }
   obtenerMetodoPagoSeleccionado(): string {

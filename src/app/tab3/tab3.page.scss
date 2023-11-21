@@ -1,0 +1,30 @@
+
+.corazon-like {
+    color: red; 
+  }
+/* En tu hoja de estilo CSS */
+ion-card {
+    background: url('https://th.bing.com/th/id/OIP.ymQdbz__eB3gAUXCeiLrOgHaE7?rs=1&pid=ImgDetMain') no-repeat center center fixed;
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente la tarjeta */
+  }
+  
+
+ion-card-content {
+    position: relative;
+  }
+  
+  .ion-text-end {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+  }
+  .corazon-like {
+    font-size: 70px;
+    color: red;
+  }
+  .corazon-dont-like{
+    font-size: 70px;
+    
+  }
+    

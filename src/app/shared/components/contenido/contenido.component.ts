@@ -68,7 +68,7 @@ export class ContenidoComponent implements OnInit {
     let path = `Usuarios/${this.user_new().uid}/Propiedad`;
     let sub = this.firebaseSvc.getCollectionData(path).subscribe({
       next: (res: any) => {
-        this.cards = res; // Restablece las tarjetas originales
+        this.cards = res;
         sub.unsubscribe();
       },
     });

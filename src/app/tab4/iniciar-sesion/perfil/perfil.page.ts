@@ -16,28 +16,24 @@ export class PerfilPage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   user = {} as User;
 
-  constructor(private firestore: AngularFirestore) { 
-      this.user = this.utilsSvc.getUserFromLocalStorage();
-    }
-
-  ngOnInit() { 
+  constructor(private firestore: AngularFirestore) {
+    this.user = this.utilsSvc.getUserFromLocalStorage();
   }
-    editarItem(uid: string) {
-      this.firestore
-        .collection(`Usuarios`)
-        .doc(uid)
-        .update(this.user)
-        .then(() => {
-          console.log('Elemento editado con éxito');
-        })
-        .catch((error) => {
-          console.error('Error al editado elemento: ', error);
-        }); 
+  ngOnInit() {}
+  editarItem(uid: string) {
+    this.firestore
+      .collection(`Usuarios`)
+      .doc(uid)
+      .update(this.user)
+      .then(() => {
+        console.log('Elemento editado con éxito');
+      })
+      .catch((error) => {
+        console.error('Error al editado elemento: ', error);
+      });
   }
   //========== CERRAR SESION ===========
-  signOut(){
+  signOut() {
     this.firebaseSvc.signOut();
   }
-
-
 }
