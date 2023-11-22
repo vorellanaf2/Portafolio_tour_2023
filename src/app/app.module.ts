@@ -30,7 +30,7 @@ import { initializeApp } from 'firebase/app';  // Importa initializeApp
 })
 export class AppModule {
   constructor() {
-    const app = initializeApp(environment.firebaseConfig); // Inicializa Firebase primero
+    const app = initializeApp(environment.firebaseConfig); 
   }
 }
 
