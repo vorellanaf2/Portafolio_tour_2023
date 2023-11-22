@@ -4,6 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
   apiKey: "AIzaSyCpGGv7ElVUtQMQyQbieWR4zhFNvCHT9Vk",
   authDomain: "tourismotest.firebaseapp.com",
+  databaseURL: "https://tourismotest-default-rtdb.firebaseio.com",
   projectId: "tourismotest",
   storageBucket: "tourismotest.appspot.com",
   messagingSenderId: "252241170392",
