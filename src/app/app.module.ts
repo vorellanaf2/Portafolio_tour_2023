@@ -1,3 +1,5 @@
+
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -7,9 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { FirebaseService } from './services/firebase.service';
+import { AngularFireStorageModule} from '@angular/fire/compat/storage';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { initializeApp } from 'firebase/app';  // Importa initializeApp
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,12 +21,16 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    FirebaseService
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    const app = initializeApp(environment.firebaseConfig); // Inicializa Firebase primero
+  }
+}
+
