@@ -17,5 +17,6 @@ const analytics = getAnalytics(app);
 
 export const environment = {
   production: true,
-  firebaseConfig: firebaseConfig
+  firebaseConfig: firebaseConfig,
+  firebaseApp: app, // Exporta la instancia de la aplicación Firebase
 };
