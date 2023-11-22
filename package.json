@@ -1,8 +1,8 @@
 {
   "name": "tourismo",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "1.0.1",
+  "author": "Victor Orellana",
+  "homepage": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -31,6 +31,7 @@
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
     "@ionic/pwa-elements": "^3.2.2",
+    "capacitor": "^0.5.6",
     "cordova-plugin-file": "^8.0.0",
     "cordova-plugin-file-transfer": "^2.0.0",
     "firebase": "^10.4.0",
