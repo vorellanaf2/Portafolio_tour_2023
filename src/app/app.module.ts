@@ -12,7 +12,9 @@ import { environment } from 'src/environments/environment';
 import { AngularFireStorageModule} from '@angular/fire/compat/storage';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { initializeApp } from 'firebase/app';  // Importa initializeApp
+import firebase from "firebase/compat/app";
 
+firebase.initializeApp(environment.firebaseConfig);
 @NgModule({
   declarations: [AppComponent],
   imports: [
