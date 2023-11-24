@@ -35,6 +35,10 @@
     </ion-item>
   </ion-accordion-group>
 </ion-card>
+
+
+<ion-content *ngIf="showContent">
+
 <ion-card *ngFor="let card of filteredItems" (click)="handleCardClick(card.direccion)" class="ion-card">
   <img [src]="card.imageAlt" />
   <ion-card-header>
@@ -54,6 +58,9 @@
     Check out
   </ion-button>
 </ion-card>
+</ion-content>
+
+
 <ion-card (click)="onClick()" color="warning" class="custom-card" *ngIf="showLoginActions">
   <ion-icon name="warning-outline" class="large-icon"></ion-icon>
   <ion-card-header>

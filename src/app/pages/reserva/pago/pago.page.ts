@@ -154,12 +154,13 @@ export class PagoPage implements OnInit {
       fechaTermino: this.endDate,
       diasArriendo: this.selectedDays,
       transporte: this.checkboxValue,
+      uidUsuario: this.propiedadData.uidUsuario,
       metodoPago: this.obtenerMetodoPagoSeleccionado(),
       total: this.getTotal(),
   };
     this.guardarConID('Reserva', commonID, reservaData);
     this.guardarConID(path, commonID, reservaData);
-    this.guardarConID(`Usuarios/${this.user.uid}/Propiedad/${this.propiedadData.productoID}/Reserva`, commonID, reservaData);
+    this.guardarConID(`Usuarios/${this.propiedadData.uidUsuario}/Propiedad/${this.propiedadData.productoID}/Reserva`, commonID, reservaData);
     this.navCtrl.navigateBack('');
 
   }

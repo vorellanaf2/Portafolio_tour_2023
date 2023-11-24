@@ -20,7 +20,7 @@ export class UtilsService {
       quality: 90,
       allowEditing: true,
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Photos,
+      source: CameraSource.Prompt,
       promptLabelHeader,
       promptLabelPhoto: 'Seleccion una imagen',
       promptLabelPicture: 'Tome una foto'

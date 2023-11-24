@@ -7,6 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
+import { UserService } from 'src/app/services/user.service';
+import { DataService } from 'src/app/services/data.service';
+
+
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -25,6 +29,8 @@ export class IniciarSesionPage implements OnInit{
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastController: ToastController,
+    private userService: UserService,
+    private dataService: DataService
   ) {
     // Formulario de Registro
     this.registerForm = this.formBuilder.group({
@@ -54,6 +60,7 @@ export class IniciarSesionPage implements OnInit{
           this.registerForm.controls['uid'].setValue(uid);
           this.registerForm.controls['tipoUsuario'].setValue(tipoUsuario)
           this.setUserInfo(uid);
+          this.userService.setUser(this.registerForm.value as User);
         })
         .catch((error) => {
           this.mostrarAlerta('Error al registrar el usuario: ' + error.message);
@@ -64,6 +71,7 @@ export class IniciarSesionPage implements OnInit{
     }
     //this.recargarPagina();
   }
+
   //////////////////////////////////////////// FUNCION SETUSERINFO /////////////////////////////////////////
   setUserInfo(uid: string) {
     let path = `Usuarios/${uid}`;
@@ -100,12 +108,18 @@ export class IniciarSesionPage implements OnInit{
         .then((res) => {
           const userUID = res.user.uid; // Obtén el UID del usuario
           this.getUserInfo(userUID);
+          this.userService.setUser(this.loginForm.value as User);
+          this.loadTab1Data();
         })
         .catch((error) => {
           this.mostrarAlerta('Error al iniciar sesión: ' + error.message);
         });
     }
     //this.recargarPagina();
+  }
+  loadTab1Data() {
+    const data = {};
+    this.dataService.updateTab1Data(data);
   }
   recuperarContra() {
     this.router.navigate(['../recuperar']),

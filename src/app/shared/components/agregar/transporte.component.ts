@@ -44,6 +44,7 @@ export class TransporteComponent {
       ollas: [false],
       comedor: [false],
       productoID: [this.commonID],
+      uidUsuario: [this.user.uid]
     });
 
     this.propertyForm = this.formBuilder.group({

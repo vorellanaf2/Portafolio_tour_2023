@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { NoAuthGuard } from '../guards/no-auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -29,11 +31,11 @@ const routes: Routes = [
           },
           {
             path: 'iniciar-sesion',
-            loadChildren: () => import('../tab4/iniciar-sesion/iniciar-sesion.module').then(m => m.IniciarSesionPageModule)
+            loadChildren: () => import('../tab4/iniciar-sesion/iniciar-sesion.module').then(m => m.IniciarSesionPageModule),canActivate:[NoAuthGuard]
           },
           {
             path: 'perfil',
-            loadChildren: () => import('../tab4/iniciar-sesion/perfil/perfil.module').then(m => m.PerfilPageModule)
+            loadChildren: () => import('../tab4/iniciar-sesion/perfil/perfil.module').then(m => m.PerfilPageModule), canActivate:[AuthGuard]
           },
           {
             path: 'recuperar',

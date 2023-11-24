@@ -5,7 +5,8 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
-
+import { DataService } from 'src/app/services/data.service'; 
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-contenido',
@@ -23,6 +24,8 @@ export class ContenidoComponent implements OnInit {
   user: User | null = null;
   showAdminActions = false;
   showLoginActions = true;
+  showContent = false;
+  tab1Data: any;
 
   filteredItems: any[] = [];
   searchTerm: string = '';
@@ -30,40 +33,42 @@ export class ContenidoComponent implements OnInit {
   constructor(
     private navCtrl: NavController,
     private firestore: AngularFirestore,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private dataService: DataService,
+    private userService: UserService,
   ) {
     const today = new Date();
     this.minDate = today.toISOString();
     this.startDate = today.toISOString();
     const maxDate = new Date(today.getFullYear(), 12, 30);
     this.maxDate = maxDate.toISOString();
-    this.endDate =today.toISOString();
+    this.endDate = today.toISOString();
     this.user = this.utilsSvc.getUserFromLocalStorage();
     this.filterItems();
 
     if (this.user) {
       this.showLoginActions = false;
+      this.showContent = true;
     }
-  
+
     if (this.user) {
       this.showAdminActions = this.user.tipoUsuario === 'Admin' || this.user.tipoUsuario === 'Empleado';
       if (this.user.tipoUsuario === 'User') {
         this.loadUserData();
-      } else if (this.user.tipoUsuario === 'Empleado' || this.user.tipoUsuario === 'Admin' ) {
+      } else if (this.user.tipoUsuario === 'Empleado' || this.user.tipoUsuario === 'Admin') {
         this.loadEmployeeData();
-      } 
+      }
     }
   }
+
   filterItems() {
     if (this.searchTerm.trim() === '') {
-      // Si el campo de búsqueda está vacío, muestra todos los elementos.
       this.filteredItems = this.cards;
     } else {
-      // Si hay un término de búsqueda, filtra los elementos que coinciden con la dirección.
       this.filteredItems = this.cards.filter(item => item.comuna.toLowerCase().includes(this.searchTerm.toLowerCase()));
     }
   }
-  
+
   getProducts() {
     let path = `Usuarios/${this.user_new().uid}/Propiedad`;
     let sub = this.firebaseSvc.getCollectionData(path).subscribe({
@@ -73,7 +78,8 @@ export class ContenidoComponent implements OnInit {
       },
     });
   }
-  user_new(): User{
+
+  user_new(): User {
     return this.utilsSvc.getFromLocalStorage('Usuarios');
   }
 
@@ -83,16 +89,27 @@ export class ContenidoComponent implements OnInit {
       const endDate = new Date(end).getTime();
       const millisecondsPerDay = 24 * 60 * 60 * 1000;
       const daysSelected = Math.floor((endDate - startDate) / millisecondsPerDay);
-      
+
       return daysSelected + 1;
     }
-    
+
     return 0;
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.userService.user$.subscribe((user) => {
+      this.user = user;
+      this.updateContent();
+    });
+
+    this.dataService.tab1Data$.subscribe((tab1Data) => {
+      this.tab1Data = tab1Data;
+      // Actualiza el contenido del tab1 según los datos recibidos
+      // Puedes usar this.tab1Data en tu lógica de visualización
+    });
+  }
 
   loadUserData() {
-    // Obtén datos del usuario desde Firestore
     this.firestore
       .collection('Propiedad')
       .valueChanges()
@@ -152,7 +169,20 @@ export class ContenidoComponent implements OnInit {
     event.stopPropagation();
     this.navCtrl.navigateForward(['/check-out', direccion]);
   }
-  onClick(){
-    this.navCtrl.navigateForward('/tabs/tab4/iniciar-sesion')
+
+  onClick() {
+    this.navCtrl.navigateForward('/tabs/tab4/iniciar-sesion');
+  }
+
+  private updateContent() {
+    if (this.user) {
+      this.showLoginActions = false;
+      this.showContent = true;
+    }
+    if (!this.user) {
+      this.showLoginActions = true;
+      this.showContent = false;
+      
+    }
   }
 }
