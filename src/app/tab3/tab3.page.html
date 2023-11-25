@@ -1,7 +1,7 @@
 <app-header title="Arriendos"></app-header>
 <ion-content>
     <div><H1>Historial de Arriendos</H1></div>
-  <ion-card class="color-fondo" *ngFor="let card of cards">
+  <ion-card class="color-fondo" *ngFor="let card of reservationCards" (click)="loadReservationsForProperty(card.uid)">
     <ion-card-header>
       <ion-card-title>{{ card.direccion }}</ion-card-title>
     </ion-card-header>
@@ -24,4 +24,21 @@
       </div>
     </ion-card-content>
   </ion-card>
+
+
+  <div><h1>Historial de Arriendos de tus propiedades</h1></div>
+
+  <ion-card class="color-fondo" *ngFor="let card of propertyCards" (click)="loadReservationsForProperty(card.uid)">
+    <ion-card-header>
+      <ion-card-title>{{ card.direccion }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong> Dirección de la Propiedad:</strong> {{ card.direccion }}</p>
+      <p><strong> Monto Arriendo:</strong> {{ card.monto ? card.monto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }) : '$ 0' }}</p>
+      <p><strong> Reservas:</strong> {{ propertyReservations[card.uid] || 0 }}</p>
+      <p><strong> Total Reservas:</strong> {{  card.total || 0 }}</p>
+    </ion-card-content>
+  </ion-card>
+  
+  
 </ion-content>
