@@ -22,6 +22,7 @@ export class ReservaPage implements OnInit {
     private datosCompartidos: FirebaseService,
     private navCtrl: NavController,
     private dataSharingService: DataSharingService,
+    private firebaseService: FirebaseService, // Agregado el servicio FirebaseService
   ) {
     this.direccion = '';
     this.propiedadData = null;
@@ -46,15 +47,14 @@ export class ReservaPage implements OnInit {
               // Llamar a cargarDatosDeProducto dentro de un nuevo subscribe
               this.cargarDatosDeProducto(this.propiedadData.productoID);
             }
-          } else if (coleccion === 'Producto') {
-            // Agregar los datos de Producto a productoData
-            this.productoData = data[0];
           }
         } else {
           console.log('No se encontraron datos para la dirección:', direccion);
         }
       });
   }
+  
+
 
   cargarDatosDeProducto(productoID: string) {
     this.firestore
@@ -69,6 +69,7 @@ export class ReservaPage implements OnInit {
         }
       });
   }
+
   onClick(direccion: string) {
     this.navCtrl.navigateForward(['/pago',direccion]);
   }

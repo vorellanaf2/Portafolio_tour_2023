@@ -189,10 +189,13 @@ export class SegmentoAdminComponent {
       );
     }
   }
-  addUpdateProduct() {
+  addUpdateProduct(uid:string) {
     this.utilsSvc.presentModal({
       component: AddUpdateProductComponent,
       cssClass: 'app-update-modal',
+      componentProps: {
+        uid_editar: uid  // Pasa el commonID al componente
+      }
     });
   }
 }

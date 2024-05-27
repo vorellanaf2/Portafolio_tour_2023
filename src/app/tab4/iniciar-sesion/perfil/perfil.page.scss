@@ -21,3 +21,23 @@ ion-row.center-content {
 ion-label.label {
     font-weight: bold;
 }
+
+// CSS Media Query para pantallas más pequeñas
+@media only screen and (max-width: 768px) {
+    .profile-icon {
+      font-size: 6em;
+    }
+  
+    .action-button {
+      font-size: 0.7em;
+      padding: 4px 8px;
+    }
+  }
+  
+  // CSS para hacer el input más ancho en pantallas grandes
+  ion-item.input-item {
+    ion-input {
+      width: 100%;
+    }
+  }
+  

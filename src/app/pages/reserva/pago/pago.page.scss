@@ -9,3 +9,21 @@
     --background: #007bff; /* Cambia el color de fondo según tus preferencias */
     --border-color: #05090c; /* Cambia el color del borde según tus preferencias */
   }
+
+  .custom-text ion-label {
+    font-size: 1em;
+    max-width: 100%;
+    overflow: hidden;
+    line-height: 1.4;
+    white-space: pre-line; /* Para manejar saltos de línea */
+    word-break: break-word; /* Para manejar palabras largas */
+  }
+  
+  .custom-text .blue-text {
+    color: blue;
+  }
+  
+  .custom-text .green-text {
+    color: green;
+  }
+  

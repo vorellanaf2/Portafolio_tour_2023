@@ -22,15 +22,15 @@ export class IniciarSesionPage implements OnInit{
   registerForm: FormGroup;
   loginForm: FormGroup;
 
-  firebaseSvc = inject(FirebaseService);
-  utilsSvc = inject(UtilsService);
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastController: ToastController,
     private userService: UserService,
-    private dataService: DataService
+    private dataService: DataService,
+    private firebaseSvc: FirebaseService,
+    private utilsSvc: UtilsService
   ) {
     // Formulario de Registro
     this.registerForm = this.formBuilder.group({

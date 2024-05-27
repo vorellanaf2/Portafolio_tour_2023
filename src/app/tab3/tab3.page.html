@@ -1,44 +1,52 @@
 <app-header title="Arriendos"></app-header>
+
 <ion-content>
-    <div><H1>Historial de Arriendos</H1></div>
-  <ion-card class="color-fondo" *ngFor="let card of reservationCards" (click)="loadReservationsForProperty(card.uid)">
-    <ion-card-header>
-      <ion-card-title>{{ card.direccion }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p><strong> Dirección del Usuario:</strong> {{ card.direccionUser }}</p>
-      <p><strong> Transporte:</strong> {{ card.transporte ? 'Si': 'No' }}</p>
-      <p><strong> Días de Arriendo:</strong> {{ card.diasArriendo }}</p>
-      <p><strong> Método de Pago:</strong> {{ card.metodoPago }}</p>
-      <p><strong> Monto Arriendo:</strong> {{ card.monto ? card.monto.toLocaleString('es-CO', { style: 'currency', currency:
-        'COP', minimumFractionDigits: 0 }) : '$ 0' }}</p>
-      <p><strong> Total:</strong> {{ card.total }}</p>
-      <ion-grid fixed>
-        <ion-row>
+
+  <!-- Resto de tu contenido -->
+  <div>
+    <H1>Historial de Arriendos</H1>
+    <ion-card class="color-fondo" *ngFor="let card of reservationCards">
+      <ion-card-header>
+        <ion-card-title color="primary">{{ card.direccion }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong> Dirección del Usuario:</strong> {{ card.direccionUser }}</p>
+        <p><strong> Transporte:</strong> {{ card.transporte ? 'Si': 'No' }}</p>
+        <p><strong> Días de Arriendo:</strong> {{ card.diasArriendo }}</p>
+        <p><strong> Método de Pago:</strong> {{ card.metodoPago }}</p>
+        <p><strong> Monto Arriendo:</strong> {{ card.monto ? card.monto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }) : '$ 0' }}</p>
+        <p><strong> Total:</strong> {{ card.total }}</p>
+        <ion-grid fixed>
+          <ion-row>
             <ion-col size="6"><p><strong> Fecha de Inicio:</strong> {{ card.fechaInicio | date: 'dd/MM/yyyy' }}</p></ion-col>
             <ion-col size="6"><p><strong> Fecha de Término:</strong> {{ card.fechaTermino | date: 'dd/MM/yyyy' }}</p></ion-col>
-        </ion-row>
-      </ion-grid>
-      <div class="ion-text-end">
-        <ion-icon class="corazon-dont-like" [name]="card.liked ? 'heart' : 'heart-outline'" class="corazon-like" (click)="toggleLike(card)"></ion-icon>
-      </div>
-    </ion-card-content>
-  </ion-card>
+          </ion-row>
+        </ion-grid>
+        <div class="ion-text-end">
+          <ion-icon class="corazon-dont-like" [name]="card.liked ? 'heart' : 'heart-outline'" class="corazon-like" (click)="toggleLike(card)"></ion-icon>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-
-  <div><h1>Historial de Arriendos de tus propiedades</h1></div>
-
-  <ion-card class="color-fondo" *ngFor="let card of propertyCards" (click)="loadReservationsForProperty(card.uid)">
-    <ion-card-header>
-      <ion-card-title>{{ card.direccion }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p><strong> Dirección de la Propiedad:</strong> {{ card.direccion }}</p>
-      <p><strong> Monto Arriendo:</strong> {{ card.monto ? card.monto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }) : '$ 0' }}</p>
-      <p><strong> Reservas:</strong> {{ propertyReservations[card.uid] || 0 }}</p>
-      <p><strong> Total Reservas:</strong> {{  card.total || 0 }}</p>
-    </ion-card-content>
-  </ion-card>
-  
-  
+    <div>
+      <h1>Historial de Arriendos de tus propiedades</h1>
+    </div>
+    
+    <ion-card class="color-fondo" *ngFor="let card of propertyCards" (click)="addUpdateProduct(card.uid)">
+      <ion-card-header>
+        <ion-card-title color="primary">{{ card.direccion }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong> Dirección de la Propiedad:</strong> {{ card.direccion }}</p>
+        <p><strong> Monto Arriendo:</strong> {{ card.monto ? card.monto.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }) : '$ 0' }}</p>
+      </ion-card-content>
+      <ion-button fill="clear" (click)="irCheckInPage($event, card.direccion)">
+        Check in
+      </ion-button>
+      <ion-button fill="clear" (click)="irCheckOutPage($event, card.direccion)">
+        Check out
+      </ion-button>
+    </ion-card>
+  </div>
 </ion-content>
+

@@ -68,6 +68,10 @@ export class FirebaseService {
       return getDownloadURL(ref(getStorage(),path))
     })
   }
+  obtenerUsuarioPorID(usuarioID: string) {
+    return this.firestore.collection('Usuarios').doc(usuarioID).valueChanges();
+  }
+  
 
   constructor(private firestore2: AngularFirestore) {}
 

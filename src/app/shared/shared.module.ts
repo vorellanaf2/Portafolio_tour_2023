@@ -12,6 +12,9 @@ import { CargaImagenesComponent } from '../shared/components/carga-imagenes/carg
 import { ContenidoVistaComponent } from '../shared/components/contenido-vista/contenido-vista.component';
 import { DatetimeComponent } from '../shared/components/datetime/datetime.component';
 import { SegmentoAdminComponent } from './components/segmento-admin/segmento-admin.component';
+import { ReservasComponent } from './components/reservas/reservas.component';
+import { EstadisticasComponent } from './components/estadisticas/estadisticas.component';
+import { CheckComponent } from './components/check/check.component';
 
 
 
@@ -26,7 +29,10 @@ import { SegmentoAdminComponent } from './components/segmento-admin/segmento-adm
     TransporteComponent,
     CargaImagenesComponent,
     ContenidoVistaComponent,
-    SegmentoAdminComponent
+    SegmentoAdminComponent,
+    ReservasComponent,
+    EstadisticasComponent,
+    CheckComponent
   ],
   exports:[
     HeaderComponent,
@@ -38,7 +44,10 @@ import { SegmentoAdminComponent } from './components/segmento-admin/segmento-adm
     TransporteComponent,
     CargaImagenesComponent,
     ContenidoVistaComponent,
-    SegmentoAdminComponent
+    SegmentoAdminComponent,
+    ReservasComponent,
+    EstadisticasComponent,
+    CheckComponent
   ],
   imports: [
     CommonModule,

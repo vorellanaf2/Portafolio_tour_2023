@@ -1,5 +1,23 @@
 <app-header title="Inicio"></app-header>
 <ion-content>
-  <app-buscar></app-buscar>
+  <!--
+  <ion-content *ngIf="showContent">
+    <ion-card *ngFor="let tarjeta of cards" class="ion-card">
+      <img [src]="tarjeta.imageAlt"/>
+      <ion-card-header>
+        <ion-card-title>{{ tarjeta.title }}</ion-card-title>
+        <ion-card-subtitle>{{ tarjeta.subtitle }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ tarjeta.content }} <br>
+        {{ tarjeta.comuna }} <br>
+        Monto de Arriendo {{ tarjeta.monto ? tarjeta.monto.toLocaleString('es-CO', { style: 'currency', currency:
+        'COP', minimumFractionDigits: 0 }) : 'No disponible' }}
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  -->
+
   <app-contenido></app-contenido>
+
 </ion-content>

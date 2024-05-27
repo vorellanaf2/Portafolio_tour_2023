@@ -1,9 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { doc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-add-update-product',
@@ -22,6 +23,7 @@ export class AddUpdateProductComponent implements OnInit {
   propertyForm: FormGroup;
   commonID: string;
   uid: string;
+  @Input() uid_editar: string;
 
   constructor(
     private firestore: AngularFirestore,
@@ -118,38 +120,40 @@ export class AddUpdateProductComponent implements OnInit {
           direccion2: doc.direccion,
           region: doc.region,
           terraza: doc.terraza,
+          agua: doc.agua,
+          banos: doc.banos,
           tipoPropiedad: doc.tipoPropiedad,
           wifi: doc.wifi,
           monto: doc.monto,
           comuna: doc.comuna,
           imageUrl: doc.image,
           imageAlt: doc.image,
-          productoID: doc.productoID, // Agregado productoID
+          productoID: doc.productoID,
         }));
 
-        // Después de cargar los datos, establecer los valores del formulario
-        if (this.empleado.length > 0) {
-          const firstEmpleado = this.empleado[0];
+        // Buscar el elemento correspondiente al uid_editar
+        const empleadoToEdit = this.empleado.find((e) => e.productoID === this.uid_editar);
 
-          // Asignar el valor de productoID a commonID
-          this.commonID = firstEmpleado.productoID;
+        // Después de cargar los datos, establecer los valores del formulario
+        if (empleadoToEdit) {
+          this.commonID = empleadoToEdit.productoID;
 
           // Establecer valores del formulario
           this.propertyForm.setValue({
-            nombre: firstEmpleado.nombre,
-            direccion: firstEmpleado.direccion,
-            comuna: firstEmpleado.comuna,
-            region: firstEmpleado.region,
-            monto: firstEmpleado.monto,
-            tipoPropiedad: firstEmpleado.tipoPropiedad,
-            habitaciones: firstEmpleado.habitacion,
-            banos: '',
-            descripcion: firstEmpleado.descripcion,
-            patio: firstEmpleado.patio,
-            terraza: firstEmpleado.terraza,
-            agua: '',
-            electricidad: firstEmpleado.electricidad,
-            wifi: firstEmpleado.wifi,
+            nombre: empleadoToEdit.nombre,
+            direccion: empleadoToEdit.direccion,
+            comuna: empleadoToEdit.comuna,
+            region: empleadoToEdit.region,
+            monto: empleadoToEdit.monto,
+            tipoPropiedad: empleadoToEdit.tipoPropiedad,
+            habitaciones: empleadoToEdit.habitacion,
+            banos: empleadoToEdit.banos,
+            descripcion: empleadoToEdit.descripcion,
+            patio: empleadoToEdit.patio,
+            terraza: empleadoToEdit.terraza,
+            agua: empleadoToEdit.agua,
+            electricidad: empleadoToEdit.electricidad,
+            wifi: empleadoToEdit.wifi,
           });
         }
       });

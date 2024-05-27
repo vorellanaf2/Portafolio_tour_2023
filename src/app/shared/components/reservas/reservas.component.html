@@ -1,0 +1,21 @@
+<app-header [isModal]="true" title="Historial de la Propiedad"></app-header>
+
+<ion-content>
+    <ion-item class="bordes-item" *ngFor="let reserva of reservas">
+      <ion-card-content>
+        <ion-card-title>{{ reserva.comuna }}</ion-card-title>
+        <ion-card-subtitle>{{ reserva.direccion }}</ion-card-subtitle>
+        <p>{{ reserva.total }}</p>
+        Dias de Arriendos
+        {{ reserva.diasArriendo }}
+        <p><ion-label>{{ reserva.fechaInicio | date: 'dd/MM/yyyy' }} - {{ reserva.fechaTermino | date: 'dd/MM/yyyy'
+            }}</ion-label></p>
+        <!-- Nuevo campo para mostrar/actualizar el estado -->
+        <ion-select [(ngModel)]="reserva.estado" (ionChange)="actualizarEstado(reserva)">
+          <ion-select-option value="Pendiente">Pendiente</ion-select-option>
+          <ion-select-option value="Aprobado">Aprobado</ion-select-option>
+          <ion-select-option value="Cancelado">Cancelado</ion-select-option>
+        </ion-select>
+      </ion-card-content>
+    </ion-item>
+</ion-content>

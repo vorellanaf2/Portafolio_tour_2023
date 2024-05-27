@@ -15,7 +15,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     IonicModule,
     PerfilPageRoutingModule,
-    SharedModule
+    SharedModule,
+    
 
   ],
   declarations: [PerfilPage]

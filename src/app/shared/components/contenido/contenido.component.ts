@@ -1,77 +1,84 @@
-import { Component, OnInit, inject, Input } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { NavController } from '@ionic/angular';
+import { NavController, IonRefresher, AlertController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils.service';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { DataSharingService } from 'src/app/services/data-sharing.service';
-import { DataService } from 'src/app/services/data.service'; 
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-contenido',
   templateUrl: './contenido.component.html',
   styleUrls: ['./contenido.component.scss'],
 })
-export class ContenidoComponent implements OnInit {
-  @Input() startDate: string;
-  @Input() endDate: string;
-  @Input() minDate: string;
-  @Input() maxDate: string;
+export class ContenidoComponent {
+  @ViewChild(IonRefresher) ionRefresher: IonRefresher;
+  startDate: string;
+  endDate: string;
+  minDate: string;
+  maxDate: string;
   cards: any[] = [];
-  utilsSvc = inject(UtilsService);
-  firebaseSvc = inject(FirebaseService);
-  user: User | null = null;
-  showAdminActions = false;
-  showLoginActions = true;
-  showContent = false;
-  tab1Data: any;
-
   filteredItems: any[] = [];
   searchTerm: string = '';
+  user: User | null = null;
+
 
   constructor(
     private navCtrl: NavController,
     private firestore: AngularFirestore,
     private dataSharingService: DataSharingService,
-    private dataService: DataService,
-    private userService: UserService,
+    private firebaseSvc: FirebaseService,
+    private utilsSvc: UtilsService,
+    private alertController: AlertController
   ) {
     const today = new Date();
     this.minDate = today.toISOString();
     this.startDate = today.toISOString();
-    const maxDate = new Date(today.getFullYear(), 12, 30);
-    this.maxDate = maxDate.toISOString();
+    this.maxDate = new Date(today.getFullYear(), 12, 30).toISOString();
     this.endDate = today.toISOString();
     this.user = this.utilsSvc.getUserFromLocalStorage();
+    this.loadData();
+  }
+
+  async loadData() {
+    this.cards = [];
+
+    if (this.user) {
+      await this.filterItems();
+    }
+
+    const today = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    this.cards = this.cards.filter(card => card.fechaReserva !== today);
+
+    console.log('Cards after loading data:', this.cards);
     this.filterItems();
 
-    if (this.user) {
-      this.showLoginActions = false;
-      this.showContent = true;
+    if (this.ionRefresher) {
+      this.ionRefresher.complete();
     }
+  }
 
-    if (this.user) {
-      this.showAdminActions = this.user.tipoUsuario === 'Admin' || this.user.tipoUsuario === 'Empleado';
-      if (this.user.tipoUsuario === 'User') {
-        this.loadUserData();
-      } else if (this.user.tipoUsuario === 'Empleado' || this.user.tipoUsuario === 'Admin') {
-        this.loadEmployeeData();
-      }
-    }
+  async doRefresh(event: any) {
+    await this.filterItems();
+    await this.loadData();
+    await this.loadEmployeeData();
+    event.target.complete();
   }
 
   filterItems() {
-    if (this.searchTerm.trim() === '') {
-      this.filteredItems = this.cards;
-    } else {
-      this.filteredItems = this.cards.filter(item => item.comuna.toLowerCase().includes(this.searchTerm.toLowerCase()));
-    }
+    this.filteredItems = this.searchTerm.trim() === ''
+      ? this.cards
+      : this.cards.filter(item => item.comuna.toLowerCase().includes(this.searchTerm.toLowerCase()));
+  }
+
+  ionViewWillEnter() {
+
+    this.loadEmployeeData();
   }
 
   getProducts() {
-    let path = `Usuarios/${this.user_new().uid}/Propiedad`;
-    let sub = this.firebaseSvc.getCollectionData(path).subscribe({
+    const path = `Usuarios/${this.user_new().uid}/Propiedad`;
+    const sub = this.firebaseSvc.getCollectionData(path).subscribe({
       next: (res: any) => {
         this.cards = res;
         sub.unsubscribe();
@@ -88,101 +95,61 @@ export class ContenidoComponent implements OnInit {
       const startDate = new Date(start).getTime();
       const endDate = new Date(end).getTime();
       const millisecondsPerDay = 24 * 60 * 60 * 1000;
-      const daysSelected = Math.floor((endDate - startDate) / millisecondsPerDay);
-
-      return daysSelected + 1;
+      return Math.floor((endDate - startDate) / millisecondsPerDay) + 1;
     }
-
     return 0;
   }
 
-  ngOnInit(): void {
-    this.userService.user$.subscribe((user) => {
-      this.user = user;
-      this.updateContent();
-    });
-
-    this.dataService.tab1Data$.subscribe((tab1Data) => {
-      this.tab1Data = tab1Data;
-      // Actualiza el contenido del tab1 según los datos recibidos
-      // Puedes usar this.tab1Data en tu lógica de visualización
-    });
-  }
-
   loadUserData() {
-    this.firestore
-      .collection('Propiedad')
-      .valueChanges()
-      .subscribe((data: any[]) => {
-        data.forEach((doc) => {
-          const direccion = doc.direccion;
-          this.cards.push({
-            title: doc.nombre,
-            subtitle: doc.direccion,
-            content: doc.descripcion,
-            monto: doc.monto,
-            comuna: doc.comuna,
-            imageUrl: doc.image,
-            imageAlt: doc.image,
-            direccion: direccion,
-          });
-        });
-      });
+    this.loadPropertyData();
   }
 
   loadEmployeeData() {
-    this.firestore
-      .collection('Propiedad')
-      .valueChanges()
-      .subscribe((data: any[]) => {
-        data.forEach((doc) => {
-          const direccion = doc.direccion;
-          this.cards.push({
-            title: doc.nombre,
-            subtitle: doc.direccion,
-            content: doc.descripcion,
-            monto: doc.monto,
-            comuna: doc.comuna,
-            imageUrl: doc.image,
-            imageAlt: doc.image,
-            direccion: direccion,
-          });
-        });
-      });
+    this.loadPropertyData();
   }
 
-  loadAdminData() {
-    // Puedes implementar una función similar para cargar datos de Firestore para administradores.
+  loadPropertyData() {
+    this.firestore.collection('Propiedad').valueChanges().subscribe((data: any[]) => {
+      this.cards = data.map(doc => ({
+        title: doc.nombre,
+        subtitle: doc.direccion,
+        content: doc.descripcion,
+        monto: doc.monto,
+        comuna: doc.comuna,
+        imageUrl: doc.image,
+        imageAlt: doc.image,
+        direccion: doc.direccion,
+      }));
+      this.filterItems();
+    });
   }
 
-  handleCardClick(direccion: string) {
+  async handleCardClick(direccion: string) {
+    if (!this.user) {
+      await this.presentLoginAlert();
+      return;
+    }
+
     this.dataSharingService.setDates(this.startDate, this.endDate);
     this.navCtrl.navigateForward(['/reserva', direccion]);
   }
 
-  irCheckInPage(event: Event, direccion: string) {
-    event.stopPropagation();
-    this.navCtrl.navigateForward(['/check-in', direccion]);
-  }
-
-  irCheckOutPage(event: Event, direccion: string) {
-    event.stopPropagation();
-    this.navCtrl.navigateForward(['/check-out', direccion]);
+  async presentLoginAlert() {
+    const alert = await this.alertController.create({
+      header: 'Iniciar Sesión',
+      message: 'Debes iniciar sesión para continuar.',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel', cssClass: 'secondary' },
+        {
+          text: 'Iniciar Sesión',
+          handler: () => this.navCtrl.navigateForward('/tabs/tab4/iniciar-sesion'),
+        },
+      ],
+    });
+    await alert.present();
   }
 
   onClick() {
     this.navCtrl.navigateForward('/tabs/tab4/iniciar-sesion');
-  }
-
-  private updateContent() {
-    if (this.user) {
-      this.showLoginActions = false;
-      this.showContent = true;
-    }
-    if (!this.user) {
-      this.showLoginActions = true;
-      this.showContent = false;
-      
-    }
   }
 }

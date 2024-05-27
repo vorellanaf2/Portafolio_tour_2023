@@ -14,6 +14,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { initializeApp } from 'firebase/app';  // Importa initializeApp
 import firebase from "firebase/compat/app";
 import { UserService } from './services/user.service';
+import { ClipboardModule } from 'ngx-clipboard';
 
 firebase.initializeApp(environment.firebaseConfig);
 @NgModule({
@@ -25,6 +26,7 @@ firebase.initializeApp(environment.firebaseConfig);
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     provideStorage(() => getStorage()),
+    ClipboardModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

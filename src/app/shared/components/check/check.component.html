@@ -1,0 +1,15 @@
+<app-header [isModal]="true" title="Check IN / Check OUT"></app-header>
+<ion-content>
+  <ion-item class="bordes-item" *ngFor="let reserva of reservas">
+    <ion-card-content>
+      <ion-card-title>{{ reserva.comuna }}</ion-card-title>
+      <ion-card-subtitle>{{ reserva.direccion }}</ion-card-subtitle>
+        <ion-button fill="clear" (click)="irCheckInPage($event, reserva.direccion)">
+          Check in
+        </ion-button>
+        <ion-button fill="clear" (click)="irCheckOutPage($event, reserva.direccion)">
+          Check out
+        </ion-button>
+    </ion-card-content>
+  </ion-item>
+</ion-content>

@@ -7,6 +7,7 @@ import { DataSharingService } from 'src/app/services/data-sharing.service';
 import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
 import { v4 as uuidv4 } from 'uuid';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-pago',
@@ -31,6 +32,13 @@ export class PagoPage implements OnInit {
     { nombre: 'Tarjeta De Debito', imagen: 'redcompra.png', seleccionada: false },
     { nombre: 'Tarjeta De Credito', imagen: 'tarjetas-de-credito-logos-png.webp', seleccionada: false },
   ];
+  datosTransferencia = {
+    numeroCuenta: '978804578',
+    correo: 'victox88@gmail.com',
+    banco: 'Scotiabank',
+    tipoCuenta: 'Vista',
+    rut: '20131744-4'
+  };
   
 
   constructor(
@@ -38,7 +46,8 @@ export class PagoPage implements OnInit {
     private firestore: AngularFirestore,
     private datosCompartidos: FirebaseService,
     private navCtrl: NavController,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private clipboardService: ClipboardService
   ) {
     this.commonID = uuidv4();
     this.direccion = '';
@@ -156,7 +165,10 @@ export class PagoPage implements OnInit {
       transporte: this.checkboxValue,
       metodoPago: this.obtenerMetodoPagoSeleccionado(),
       total: this.getTotal(),
+      uid: this.commonID,
+      estado: ['Pendiente'],
   };
+  
     this.guardarConID('Reserva', commonID, reservaData);
     this.guardarConID(path, commonID, reservaData);
     this.guardarConID(`Propiedad/${this.propiedadData.productoID}/Reserva`,commonID,reservaData);
@@ -172,7 +184,24 @@ export class PagoPage implements OnInit {
     }
     return 'No seleccionado';
   }
+  isTransferenciaSeleccionada(): boolean {
+    return this.opciones.some(opcion => opcion.seleccionada && opcion.nombre === 'Transferencia');
+  }
+  
+  isTarjetaSeleccionada(): boolean {
+    return this.opciones.some(opcion => opcion.seleccionada && (opcion.nombre === 'Tarjeta De Debito' || opcion.nombre === 'Tarjeta De Credito'));
+  }
+  copiarDatosTransferencia() {
+    const textoCopiar =
+      `Número de cuenta: ${this.datosTransferencia.numeroCuenta}\n` +
+      `Correo: ${this.datosTransferencia.correo}\n` +
+      `Banco: ${this.datosTransferencia.banco}\n` +
+      `Tipo de cuenta: ${this.datosTransferencia.tipoCuenta}\n` +
+      `RUT: ${this.datosTransferencia.rut}`;
 
+      this.clipboardService.copyFromContent(textoCopiar);
+  }
+  
   imagenUrl(nombreImagen: string): string {
     return `https://firebasestorage.googleapis.com/v0/b/tourismotest.appspot.com/o/Metodo%20de%20pago%2F${nombreImagen}?alt=media`;
   }

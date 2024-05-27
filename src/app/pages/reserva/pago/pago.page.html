@@ -7,13 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content *ngIf="propiedadData">
-    
+
   <style>
     ion-item img {
-      max-width: 100px; /* Establece el ancho máximo que desees */
-      height: auto; /* Mantiene la proporción original */
+      max-width: 100px;
+      /* Establece el ancho máximo que desees */
+      height: auto;
+      /* Mantiene la proporción original */
     }
   </style>
 
@@ -21,51 +22,110 @@
     <ion-row>
       <ion-col size="12">
         <h1><strong><ion-label>Detalle de Pago</ion-label></strong></h1>
-        <ion-list >
+        <ion-list>
           <ion-item>
-            <ion-label><strong>Monto:</strong></ion-label>{{ propiedadData.monto ? propiedadData.monto.toLocaleString('es-CO', { style: 'currency', currency:
-            'COP', minimumFractionDigits: 0 }) : 'No disponible' }} 
-          </ion-item>       
-        <ion-item>
-          <ion-label><strong>Fecha de inicio:</strong> </ion-label>{{this.startDate | date: 'dd/MM/yyyy'}}
-        </ion-item>
-        <ion-item>
-          <ion-label><strong>Fecha de termino:</strong> </ion-label>{{this.endDate | date: 'dd/MM/yyyy'}}
-        </ion-item>
-        <ion-item>
-          <ion-label><strong>Cantidad de dias: </strong></ion-label>{{this.selectedDays}}
-        </ion-item>
-        <ion-card class="color-fondo">
-          <ion-card-title><strong> Metodo de pago</strong></ion-card-title>
-          <ion-item *ngFor="let opcion of opciones" (click)="seleccionarOpcion(opcion)">
-            <img [src]="imagenUrl(opcion.imagen)" alt="Imagen de {{ opcion.nombre }}" />
-            <ion-label>{{ opcion.nombre }}</ion-label>
-            <ion-checkbox class="ion-checkbox-1" [(ngModel)]="opcion.seleccionada" required></ion-checkbox>
+            <ion-label><strong>Monto:</strong></ion-label>{{ propiedadData.monto ?
+            propiedadData.monto.toLocaleString('es-CO', { style: 'currency', currency:
+            'COP', minimumFractionDigits: 0 }) : 'No disponible' }}
           </ion-item>
-        </ion-card>
-        <ion-item>
-          <div>
-            <ion-label>¿Desea Transporte?</ion-label>
-            <ion-label color="danger">Posee un cobro extra $45.000</ion-label>
-          </div>
+          <ion-item>
+            <ion-label><strong>Fecha de inicio:</strong> </ion-label>{{startDate | date: 'dd/MM/yyyy'}}
+          </ion-item>
+          <ion-item>
+            <ion-label><strong>Fecha de termino:</strong> </ion-label>{{endDate | date: 'dd/MM/yyyy'}}
+          </ion-item>
+          <ion-item>
+            <ion-label><strong>Cantidad de días: </strong></ion-label>{{selectedDays}}
+          </ion-item>
 
-          <ion-checkbox [(ngModel)]="checkboxValue" slot="end"></ion-checkbox>
-        </ion-item>
-        <ion-item *ngIf="checkboxValue">
-          <ion-label>
-            Desde: <span style="color: blue;">{{this.user.direccion}}</span> <br>
-            <span style="color: black"></span> <br>
-            Hacia: <span style="color: green;">{{propiedadData.direccion}}</span> <br> <br>
-            Su transporte se efectuara el dia {{this.startDate | date: 'dd/MM/yyyy'}} a las 10:00 am
-          </ion-label>
-        </ion-item>
-        
-        
-        
+          <ion-card class="color-fondo">
+            <ion-card-title><strong> Método de pago</strong></ion-card-title>
+            <ion-item *ngFor="let opcion of opciones" (click)="seleccionarOpcion(opcion)">
+              <img [src]="imagenUrl(opcion.imagen)" alt="Imagen de {{ opcion.nombre }}" />
+              <ion-label>{{ opcion.nombre }}</ion-label>
+              <ion-checkbox class="ion-checkbox-1" [(ngModel)]="opcion.seleccionada" required></ion-checkbox>
+            </ion-item>
+          </ion-card>
+          <ion-card>
+
+
+            <!-- Agregar sección para datos de transferencia -->
+            <ion-item *ngIf="isTransferenciaSeleccionada()">
+              <ion-label>Información de Transferencia:</ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="isTransferenciaSeleccionada()">
+              <ion-label>Numero de cuenta: <ion-text>{{ datosTransferencia.numeroCuenta }}</ion-text></ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="isTransferenciaSeleccionada()">
+              <ion-label>Correo: <ion-text>{{ datosTransferencia.correo }}</ion-text></ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="isTransferenciaSeleccionada()">
+              <ion-label>Banco: <ion-text>{{ datosTransferencia.banco }}</ion-text></ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="isTransferenciaSeleccionada()">
+              <ion-label>Tipo de cuenta: <ion-text>{{ datosTransferencia.tipoCuenta }}</ion-text></ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="isTransferenciaSeleccionada()">
+              <ion-label>Rut: <ion-text>{{ datosTransferencia.rut }}</ion-text></ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="isTransferenciaSeleccionada()">
+              <ion-button (click)="copiarDatosTransferencia()" expand="block">Copiar Datos</ion-button>
+            </ion-item>
+
+
+            <ion-item *ngIf="isTarjetaSeleccionada()">
+              <ion-label>Información de la Tarjeta de Credito:</ion-label>
+            </ion-item>            
+            <ion-item *ngIf="isTarjetaSeleccionada()">
+              <ion-input type="" placeholder="Nombre Apellido" required></ion-input>
+            </ion-item>
+            <ion-item *ngIf="isTarjetaSeleccionada()">
+              <ion-input type="" placeholder="Numero de tarjeta" required></ion-input>
+            </ion-item>
+            <ion-item *ngIf="isTarjetaSeleccionada()">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="5">
+                    <ion-input type="" placeholder="Mes" required></ion-input>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-input type="" placeholder="Año" required></ion-input>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+            <ion-item *ngIf="isTarjetaSeleccionada()">
+              <ion-input type="" placeholder="CVC" required></ion-input>
+            </ion-item>
+        </ion-card>
+          <ion-item>
+
+            <div>
+              <ion-label>¿Desea Transporte?</ion-label>
+              <ion-label color="danger">Posee un cobro extra $45.000</ion-label>
+            </div>
+
+            <ion-checkbox [(ngModel)]="checkboxValue" slot="end"></ion-checkbox>
+          </ion-item>
+          <ion-item *ngIf="checkboxValue" class="custom-text">
+            <ion-label>
+              Desde: <span class="blue-text">{{user.direccion}}</span> <br>
+              <span class="black-text"></span> <br>
+              Hacia: <span class="green-text">{{propiedadData.direccion}}</span> <br> <br>
+              Su transporte se efectuará el día {{startDate | date: 'dd/MM/yyyy'}} a las 10:00 am
+            </ion-label>
+          </ion-item>
+
           <ion-item class="custom-item">
             <ion-input placeholder="Cupón"></ion-input>
             <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
-              Aplicar cupon
+              Aplicar cupón
             </ion-button>
           </ion-item>
         </ion-list>
@@ -78,16 +138,16 @@
             <ion-row>
               <ion-col size="6">
                 <ion-item>
-                  <ion-label>Monto x Dias</ion-label>
+                  <ion-label>Monto x Días</ion-label>
                 </ion-item>
                 <ion-item>
-                  <ion-label>Abono deposito 50%</ion-label>
+                  <ion-label>Abono depósito 50%</ion-label>
                 </ion-item>
                 <ion-item *ngIf="checkboxValue">
                   <ion-label>Transporte</ion-label>
                 </ion-item>
                 <ion-item>
-                  
+
                 </ion-item>
                 <ion-item>
                   <ion-label><strong>Total</strong></ion-label>
@@ -95,24 +155,28 @@
               </ion-col>
               <ion-col size="6">
                 <ion-item>
-                  <ion-label></ion-label>{{ (propiedadData.monto && this.selectedDays) ? (propiedadData.monto * this.selectedDays).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }) : '$ 0' }}
+                  <ion-label></ion-label>{{ (propiedadData.monto && selectedDays) ? (propiedadData.monto *
+                  selectedDays).toLocaleString('es-CO', { style: 'currency', currency: 'COP',
+                  minimumFractionDigits: 0 }) : '$ 0' }}
                 </ion-item>
-                
+
                 <ion-item>
-                  <ion-label></ion-label>{{ (propiedadData.monto && this.selectedDays) ? ((propiedadData.monto * this.selectedDays) / 2).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }) : '$ 0' }}
+                  <ion-label></ion-label>{{ (propiedadData.monto && selectedDays) ? ((propiedadData.monto *
+                  selectedDays) / 2).toLocaleString('es-CO', { style: 'currency', currency: 'COP',
+                  minimumFractionDigits: 0 }) : '$ 0' }}
                 </ion-item>
-                
+
                 <ion-item *ngIf="checkboxValue">
                   <ion-label></ion-label>{{ getPrecioTransporte() }}
                 </ion-item>
                 <ion-item>
-                  
+
                 </ion-item>
                 <ion-item><ion-label></ion-label><strong>{{ getTotal() }}</strong></ion-item>
               </ion-col>
             </ion-row>
           </ion-grid>
-            <ion-button (click)="realizarPago()" expand="block" [disabled]="!isCheckBoxSelected()">Pagar</ion-button>
+          <ion-button (click)="realizarPago()" expand="block" [disabled]="!isCheckBoxSelected()">Pagar</ion-button>
         </ion-list>
       </ion-col>
     </ion-row>
